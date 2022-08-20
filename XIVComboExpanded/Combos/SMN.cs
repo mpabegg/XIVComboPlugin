@@ -444,6 +444,9 @@ namespace XIVComboExpandedestPlugin.Combos
             if (!Service.BuddyList.PetBuddyPresent && gauge.SummonTimerRemaining == 0 && gauge.Attunement == 0)
                 return SMN.SummonCarbuncle;
 
+            if (IsActionOffCooldown(SMN.Aethercharge) && HasCondition(ConditionFlag.InCombat))
+                return SMN.Aethercharge;
+
             return actionID;
         }
     }

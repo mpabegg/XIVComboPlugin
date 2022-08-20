@@ -433,7 +433,7 @@ namespace XIVComboExpandedestPlugin.Combos
             return IsActionOffCooldown(All.LucidDreaming) && HasCondition(ConditionFlag.InCombat) && !IsActionOffCooldown(actionID) && LocalPlayer?.CurrentMp <= 9000 && CanUseAction(All.LucidDreaming) ? All.LucidDreaming : actionID;
         }
     }
-
+    
     internal class SummonerMashFeature : CustomCombo
     {
         protected override CustomComboPreset Preset => CustomComboPreset.SummonerMashFeature;
@@ -446,6 +446,9 @@ namespace XIVComboExpandedestPlugin.Combos
 
             if (IsActionOffCooldown(SMN.Aethercharge) && HasCondition(ConditionFlag.InCombat))
                 return SMN.Aethercharge;
+
+            if (OriginalHook(SMN.Gemshine) != SMN.Gemshine) // If Gemshine is in Ruby Ruin state, for instance
+                return OriginalHook(SMN.Gemshine);
 
             return actionID;
         }

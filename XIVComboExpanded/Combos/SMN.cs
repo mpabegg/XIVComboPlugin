@@ -433,4 +433,18 @@ namespace XIVComboExpandedestPlugin.Combos
             return IsActionOffCooldown(All.LucidDreaming) && HasCondition(ConditionFlag.InCombat) && !IsActionOffCooldown(actionID) && LocalPlayer?.CurrentMp <= 9000 && CanUseAction(All.LucidDreaming) ? All.LucidDreaming : actionID;
         }
     }
+
+    internal class SummonerMashFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.SummonerMashFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+        {
+            var gauge = GetJobGauge<SMNGauge>();
+            if (!Service.BuddyList.PetBuddyPresent && gauge.SummonTimerRemaining == 0 && gauge.Attunement == 0)
+                return SMN.SummonCarbuncle;
+
+            return actionID;
+        }
+    }
 }

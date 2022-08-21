@@ -270,8 +270,12 @@ namespace XIVComboExpandedestPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (IsActionOffCooldown(BRD.RagingStrikes) && HasCondition(ConditionFlag.InCombat))
+            if (IsActionOffCooldown(BRD.RagingStrikes))
                 return BRD.RagingStrikes;
+
+            var venomous = FindTargetEffect(BRD.Debuffs.VenomousBite);
+            if (venomous is null || venomous?.RemainingTime < 5.0)
+                return BRD.VenomousBite;
 
             if (HasEffect(BRD.Buffs.StraightShotReady))
                 return OriginalHook(BRD.StraightShot);

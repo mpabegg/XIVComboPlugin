@@ -248,6 +248,10 @@ namespace XIVComboExpandedestPlugin
         [CustomComboInfo("Bloodletter to Rain of Death", "Replaces Bloodletter with Rain of Death if your last GCD was either Quick Nock/Ladonsbite or Shadowbite.", BRD.JobID, BRD.Bloodletter)]
         BardRainFeature = 2310,
 
+        [OrderedEnum]
+        [CustomComboInfo("Lazy?", "Does everythinh", BRD.JobID, BRD.HeavyShot)]
+        BardMashFeature = 2391,
+
         #endregion
         // ====================================================================================
         #region DANCER

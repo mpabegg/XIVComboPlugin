@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-
+using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
 
@@ -261,6 +261,22 @@ namespace XIVComboExpandedestPlugin.Combos
         {
             // return !TargetHasEffect(BRD.Debuffs.CausticBite) && !TargetHasEffect(BRD.Debuffs.Stormbite) && !TargetHasEffect(BRD.Debuffs.Windbite) && !TargetHasEffect(BRD.Debuffs.VenomousBite) && CanUseAction(BRD.RainOfDeath) ? BRD.RainOfDeath : BRD.Bloodletter;
             return (this.FilteredLastComboMove == OriginalHook(BRD.QuickNock) || this.FilteredLastComboMove == OriginalHook(BRD.Shadowbite)) && CanUseAction(BRD.RainOfDeath) ? BRD.RainOfDeath : BRD.Bloodletter;
+        }
+    }
+
+    internal class BardMashFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.BardMashFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (IsActionOffCooldown(BRD.RagingStrikes) && HasCondition(ConditionFlag.InCombat))
+                return BRD.RagingStrikes;
+
+            if (HasEffect(BRD.Buffs.StraightShotReady))
+                return OriginalHook(BRD.StraightShot);
+
+            return OriginalHook(actionID);
         }
     }
 }

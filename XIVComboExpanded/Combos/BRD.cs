@@ -280,7 +280,7 @@ namespace XIVComboExpandedestPlugin.Combos
             if (HasEffect(BRD.Buffs.StraightShotReady))
                 return OriginalHook(BRD.StraightShot);
 
-            return OriginalHook(actionID);
+            return OriginalHook(BRD.HeavyShot);
         }
     }
 }

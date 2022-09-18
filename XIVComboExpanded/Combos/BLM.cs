@@ -187,8 +187,13 @@ namespace XIVComboExpandedestPlugin.Combos
                         return BLM.Despair;
                 }
 
-                if (IsEnabled(CustomComboPreset.BlackEnochianXenoglossyFeature) && gauge.PolyglotStacks > 0 && level >= BLM.Levels.Xenoglossy && this.IsMoving && !HasEffect(BLM.Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) && CurrentTarget is not null)
-                    return IsEnabled(CustomComboPreset.BlackXenoFoulFeature) && aoeSpells.Contains(this.FilteredLastComboMove) ? BLM.Foul : BLM.Xenoglossy;
+                var isAoE = false;
+
+                if (IsEnabled(CustomComboPreset.BlackXenoFoulFeature) && IsEnabled(CustomComboPreset.BlackEnochianXenoglossyFeature))
+                    isAoE = aoeSpells.Contains(this.FilteredLastComboMove);
+
+                if (IsEnabled(CustomComboPreset.BlackEnochianXenoglossyFeature) && gauge.PolyglotStacks > 0 && level >= BLM.Levels.Xenoglossy && IsMoving() && !HasEffect(BLM.Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast))
+                    return isAoE ? BLM.Foul : BLM.Xenoglossy;
 
                 return gauge.InUmbralIce ? (level < BLM.Levels.Blizzard4 ? BLM.Blizzard : BLM.Blizzard4) : (level < BLM.Levels.Fire4 ? BLM.Fire : BLM.Fire4);
             }
@@ -223,11 +228,14 @@ namespace XIVComboExpandedestPlugin.Combos
             {
                 var gauge = GetJobGauge<BLMGauge>();
 
+                if (IsEnabled(CustomComboPreset.BlackFreezeFlareFoulFeature) && gauge.PolyglotStacks > 0 && level >= BLM.Levels.Xenoglossy && IsMoving() && !HasEffect(BLM.Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast))
+                    return BLM.Foul;
+
+                if (!gauge.InAstralFire && !gauge.InUmbralIce)
+                    return actionID;
+
                 if (TargetHasEffect(BLM.Debuffs.Thunder3) && IsEnabled(CustomComboPreset.BlackFlareDespairFeature) && level >= BLM.Levels.Despair && gauge.InAstralFire)
                     return BLM.Despair;
-
-                if (IsEnabled(CustomComboPreset.BlackFreezeFlareFoulFeature) && gauge.PolyglotStacks > 0 && level >= BLM.Levels.Xenoglossy && this.IsMoving && !HasEffect(BLM.Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) && CurrentTarget is not null)
-                    return BLM.Foul;
 
                 return gauge.InUmbralIce ? BLM.Freeze : BLM.Flare;
             }

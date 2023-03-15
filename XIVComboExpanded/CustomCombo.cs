@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-
+using System.Runtime.CompilerServices;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
 using Dalamud.Utility;
+using FFXIVClientStructs.FFXIV.Client.UI.Agent;
 using XIVComboExpandedestPlugin.Attributes;
 
 namespace XIVComboExpandedestPlugin.Combos
@@ -63,6 +64,8 @@ namespace XIVComboExpandedestPlugin.Combos
 
         protected uint FilteredLastComboMove { get; set; }
 
+        protected Vector2 Position { get; set; }
+
         protected uint[] FilteredLastComboMoves { get; set; } = new uint[]
         {
             BRD.EmpyrealArrow,
@@ -70,11 +73,11 @@ namespace XIVComboExpandedestPlugin.Combos
             BRD.ApexArrow,
             BRD.BlastArrow,
             BRD.RadiantFinale,
-            PLD.HolyCircle,
-            PLD.Confiteor,
-            PLD.BladeOfFaith,
-            PLD.BladeOfTruth,
-            PLD.BladeOfValor,
+            PLD.NotFatedCircle,
+            PLD.NotGnashingFangCombo,
+            PLD.NotGnashingFang,
+            PLD.NotSavageClaw,
+            PLD.NotWickedTalon,
             DRG.FangAndClaw,
             DRG.WheelingThrust,
             RDM.Moulinet,
@@ -219,11 +222,7 @@ namespace XIVComboExpandedestPlugin.Combos
         /// Gets bool determining if player is moving.
         /// </summary>
         /// <returns>A bool value of whether the player is moving or not.</returns>
-        protected static unsafe bool IsMoving()
-        {
-            var agentMap = FFXIVClientStructs.FFXIV.Client.UI.Agent.AgentMap.Instance();
-            return agentMap != null && agentMap->IsPlayerMoving > 0 ? true : false;
-        }
+        protected static unsafe bool IsMoving() => Service.IconReplacer.IsMoving(); // AgentMap.Instance() != null && AgentMap.Instance()->IsPlayerMoving > 0 ? true : false;
 
         /// <summary>
         /// Determine if the given preset is enabled.

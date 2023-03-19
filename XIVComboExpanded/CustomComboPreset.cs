@@ -252,8 +252,8 @@ namespace XIVComboExpandedestPlugin
         BardRainFeature = 2310,
 
         [OrderedEnum]
-        [CustomComboInfo("Lazy?", "Does everythinh", BRD.JobID, BRD.HeavyShot)]
-        BardMashFeature = 2391,
+        [CustomComboInfo("Single Target","...", BRD.JobID, BRD.HeavyShot)]
+        BardSingleTargetFeature = 2391,
 
         #endregion
         // ====================================================================================
@@ -350,6 +350,10 @@ namespace XIVComboExpandedestPlugin
             "\nYou can get Action IDs with Garland Tools by searching for the action and clicking the cog.",
             DNC.JobID)]
         DancerDanceComboCompatibility = 3807,
+
+        [OrderedEnum]
+        [CustomComboInfo("Lazy", "For when you just want to chill", DNC.JobID, DNC.Cascade)]
+        DancerLazyFeature = 3891,
 
         #endregion
         // ====================================================================================

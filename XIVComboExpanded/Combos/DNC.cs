@@ -372,4 +372,15 @@ namespace XIVComboExpandedestPlugin.Combos
             return actionID == DNC.TechnicalStep && OriginalHook(DNC.TechnicalStep) == DNC.TechnicalStep && IsActionOffCooldown(DNC.TechnicalStep) && HasEffectAny(DNC.Buffs.TechnicalFinish) && FindEffectAny(DNC.Buffs.TechnicalFinish)?.RemainingTime > 8 ? SMN.Physick : actionID;
         }
     }
+
+    internal class DancerLazyFeature : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.DancerLazyFeature;
+
+        protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+        {
+            return actionID;
+        }
+
+    }
 }

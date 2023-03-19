@@ -284,9 +284,9 @@ namespace XIVComboExpandedestPlugin.Combos
         }
     }
 
-    internal class BardMashFeature : CustomCombo
+    internal class BardSingleTargetFeature: CustomCombo
     {
-        protected override CustomComboPreset Preset => CustomComboPreset.BardMashFeature;
+        protected override CustomComboPreset Preset => CustomComboPreset.BardSingleTargetFeature;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -294,8 +294,16 @@ namespace XIVComboExpandedestPlugin.Combos
                 return BRD.RagingStrikes;
 
             var venomous = FindTargetEffect(BRD.Debuffs.VenomousBite);
-            if (venomous is null || venomous?.RemainingTime < 5.0)
+            if (venomous is null || venomous.RemainingTime < 5.0)
                 return BRD.VenomousBite;
+
+            var bitten = FindTargetEffect(BRD.Debuffs.Windbite);
+            if (bitten is null || bitten.RemainingTime < 5.0)
+                return BRD.Windbite;
+
+            if (IsActionOffCooldown(BRD.Bloodletter) && !GCDClipCheck())
+                return BRD.Bloodletter;
+
 
             if (HasEffect(BRD.Buffs.StraightShotReady))
                 return OriginalHook(BRD.StraightShot);
